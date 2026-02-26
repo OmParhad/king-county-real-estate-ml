@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>House Price Predictor</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>🏠 House Price Prediction</h1>
+
+        <form id="predictionForm">
+            <input type="number" name="bedrooms" placeholder="Bedrooms" required>
+            <input type="number" step="0.1" name="bathrooms" placeholder="Bathrooms" required>
+            <input type="number" name="sqft_living" placeholder="Living Area (sqft)" required>
+            <input type="number" name="sqft_lot" placeholder="Lot Size" required>
+            <input type="number" step="0.1" name="floors" placeholder="Floors" required>
+            <input type="number" name="waterfront" placeholder="Waterfront (0/1)" required>
+            <input type="number" name="view" placeholder="View Score" required>
+            <input type="number" name="condition" placeholder="Condition" required>
+            <input type="number" name="grade" placeholder="Grade" required>
+            <input type="number" name="sqft_basement" placeholder="Basement sqft" required>
+            <input type="number" name="yr_built" placeholder="Year Built" required>
+            <input type="number" name="zipcode" placeholder="Zipcode" required>
+            <input type="number" step="0.0001" name="lat" placeholder="Latitude" required>
+            <input type="number" step="0.0001" name="long" placeholder="Longitude" required>
+            <input type="number" name="sqft_living15" placeholder="Living15 sqft" required>
+            <input type="number" name="sqft_lot15" placeholder="Lot15 sqft" required>
+            <input type="number" name="yr_renovated" placeholder="Renovated (0/1)" required>
+            <input type="number" name="date_timestamp" placeholder="YYYYMMDD" required>
+           
+            <button type="submit">Predict Price</button>
+
+            <p style="text-align:center; font-size:14px; margin-bottom:15px;">
+                AI-powered property valuation system
+            </p>
+
+            <p style="text-align:center; font-size:12px; margin-top:10px;">
+                Developed with passion by Om Parhad
+            </p>
+
+        </form>
+
+        <h2 id="result"></h2>
+    </div>
+
+    <script>
+document.getElementById("predictionForm").addEventListener("submit", async function(e) {
+    e.preventDefault();  // VERY IMPORTANT
+
+    const formData = new FormData(this);
+    const data = {};
+
+    formData.forEach((value, key) => {
+        data[key] = Number(value);
+    });
+
+    const response = await fetch("/predict", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    });
+
+    const result = await response.json();
+
+    document.getElementById("result").innerHTML =
+        "💰 Predicted Price: $" + result.prediction.toLocaleString()
+});
+</script>
+
+</body>
+
+</html>
