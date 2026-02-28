@@ -7,9 +7,9 @@ This project builds a regression model to estimate residential property prices b
 
 The pipeline includes:
  - Data preprocessing
- - Log transformation of target variable
+ - Log transformation of the target variable
  - Feature engineering
  - Model comparison (Linear Regression vs Random Forest)
  - Model evaluation (R², RMSE, MAE)
  - Model serialization using joblib
- - Web deployment using Flask
+ - Web deployment using FstApi
